@@ -7,7 +7,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(50))
     email = Column(String(100), unique=True)
-    books = relationship('Book', backref='user')
+    books = relationship('Book', backref='user', cascade="all, delete, delete-orphan", passive_deletes=True)
 
 
 class Book(Base):
@@ -15,4 +15,4 @@ class Book(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(50), unique=True)
     description = Column(String(100), nullable=True)
-    user_id = Column(Integer, ForeignKey('user.id'))
+    user_id = Column(Integer, ForeignKey('user.id', ondelete="CASCADE"))
